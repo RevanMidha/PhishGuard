@@ -3,22 +3,27 @@ agent any
 
 stages {
 
-    stage('Install Node') {
+    stage('Install Node (Client)') {
         steps {
-            bat 'npm install'
+            dir('client') {
+                bat 'npm install'
+            }
         }
     }
 
-    stage('Install Python') {
+    stage('Install Python (Server)') {
         steps {
-            bat 'pip install -r requirements.txt'
+            dir('server') {
+                bat 'pip install -r requirements.txt'
+            }
         }
     }
 
     stage('Run App') {
         steps {
-            echo 'PhishGuard running successfully 🚀'
+            echo 'PhishGuard pipeline executed successfully 🚀'
         }
     }
 }
+
 }
