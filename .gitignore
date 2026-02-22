@@ -1,21 +1,42 @@
-# Virtual environments
+# =========================
+# Environment variables
+# =========================
+.env
+server/.env
+client/.env
+
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log
+package-lock.json
+
+# =========================
+# Python
+# =========================
 venv/
 ml_engine/venv/
-
-# Python
 __pycache__/
 *.pyc
-*.pyo
 
-# Node
-node_modules/
-
-# ML / Models
+# =========================
+# ML Models / Weights
+# =========================
 *.h5
 *.pt
 *.pb
-*.ckpt
+models/
 
-# OS
-.env
+# =========================
+# OS / IDE
+# =========================
 .vscode/
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log

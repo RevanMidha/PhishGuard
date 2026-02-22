@@ -95,31 +95,28 @@ PhishGuard/
 
 ## 🚀 How to Run
 
-### 1️⃣ Clone the repository
+### 1️⃣ Clone repository
 
-```
 git clone https://github.com/RevanMidha/PhishGuard.git
 cd PhishGuard
-```
 
-### 2️⃣ Install dependencies
+### 2️⃣ Install backend dependencies
 
-```
-pip install -r requirements.txt
-```
+cd server
+npm install
 
 ### 3️⃣ Start backend server
 
-```
-python server/app.py
-```
+npm start
 
-Server runs at:
-
-```
+Server runs on:
 http://localhost:5000
-```
 
+### 4️⃣ Install frontend dependencies
+
+cd ../client
+npm install
+npm start
 ---
 
 ## 📊 Features
