@@ -4,3 +4,6 @@ scikit-learn
 joblib
 tldextract
 beautifulsoup4
+requests
+nltk
+opencv-python
