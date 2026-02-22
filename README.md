@@ -141,13 +141,14 @@ http://localhost:5000
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Authors
 
-**Revan Midha**
-**Utkarsh Singh**
-**Simarpreet Singh**
-**Dushyant Saini**
-Capstone Project — PhishGuard
+- **Revan Midha**  
+- **Utkarsh Singh**  
+- **Simarpreet Singh**  
+- **Dushyant Saini**  
+
+Capstone Project — **PhishGuard**
 
 ---
 
