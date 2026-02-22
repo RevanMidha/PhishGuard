@@ -45,28 +45,12 @@ PhishGuard/
 
 ---
 
-## ⚙️ Technologies Used
+## ⚙️ Tech Stack
 
-**Programming & Backend**
-
-* Python
-* Flask / FastAPI
-
-**Machine Learning**
-
-* Scikit-learn
-* TensorFlow / Keras
-* OpenCV
-
-**NLP**
-
-* TF-IDF
-* Text Classification
-
-**Frontend**
-
-* JavaScript
-* HTML / CSS
+**Backend:** Node.js, Express.js  
+**Machine Learning:** Python, Scikit-learn, TensorFlow, OpenCV  
+**NLP:** TF-IDF, Text Classification  
+**Frontend:** JavaScript, HTML, CSS  
 
 ---
 
@@ -97,8 +81,8 @@ PhishGuard/
 
 ### 1️⃣ Clone repository
 
-git clone https://github.com/RevanMidha/PhishGuard.git
-cd PhishGuard
+* git clone https://github.com/RevanMidha/PhishGuard.git
+* cd PhishGuard
 
 ### 2️⃣ Install backend dependencies
 
@@ -114,7 +98,7 @@ http://localhost:5000
 
 ### 4️⃣ Install frontend dependencies
 
-cd ../client
+cd ./client
 npm install
 npm start
 ---
