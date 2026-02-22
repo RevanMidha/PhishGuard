@@ -1,0 +1,21 @@
+# Virtual environments
+venv/
+ml_engine/venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# ML / Models
+*.h5
+*.pt
+*.pb
+*.ckpt
+
+# OS
+.env
+.vscode/
