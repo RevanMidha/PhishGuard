@@ -12,13 +12,13 @@ stages {
 
     stage('Install Node') {
         steps {
-            sh 'npm install'
+            bat 'npm install'
         }
     }
 
     stage('Install Python') {
         steps {
-            sh 'pip install -r requirements.txt'
+            bat 'pip install -r requirements.txt'
         }
     }
 
