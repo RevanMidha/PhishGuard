@@ -5,7 +5,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/RevanMidha/PhishGuard.git'
+                // We explicitly tell the robot to look at the 'main' branch
+                git branch: 'main', url: 'https://github.com/RevanMidha/PhishGuard.git'
             }
         }
 
