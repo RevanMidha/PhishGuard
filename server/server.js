@@ -1,21 +1,25 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import express from 'express';
-import cors from 'cors';
-import connectDB from './config/db.js'; // Note the .js extension
-import authRoutes from './routes/authRoutes.js';
+    import dotenv from 'dotenv';
+    dotenv.config();
+    import express from 'express';
+    import cors from 'cors';
+    import connectDB from './config/db.js'; // Note the .js extension
+    import authRoutes from './routes/authRoutes.js';
 
-const app = express();
+    const app = express();
 
-// Connect to Database
-connectDB();
+    app.get('/', (req, res) => {
+    res.send('PhishGuard API is successfully running!');
+    });
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+    // Connect to Database
+    connectDB();
 
-// Routes
-app.use('/api/auth', authRoutes);
+    // Middleware
+    app.use(cors());
+    app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    // Routes
+    app.use('/api/auth', authRoutes);
+
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

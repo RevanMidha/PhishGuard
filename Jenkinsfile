@@ -44,7 +44,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 bat '''
-                docker run -d -p 5000:5000 --name phishguard-container -e MONGO_URI="mongodb://127.0.0.1:27017/phishguard" -e JWT_SECRET="kLdKkZNzxxW07sutPzePOdHII4EOK2JkIBi7pfYCL88=" phishguard
+                docker run -d -p 5000:5000 --name phishguard-container -e MONGO_URI="mongodb://host.docker.internal:27017/phishguard" -e JWT_SECRET="kLdKkZNzxxW07sutPzePOdHII4EOK2JkIBi7pfYCL88=" phishguard
                 '''
             }
         }
