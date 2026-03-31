@@ -1,7 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Methodology from './pages/Methodology'; // ADDED THIS IMPORT
+import UrlScanner from './pages/UrlScanner';
+import TextScanner from './pages/TextScanner';
+import VisionScanner from './pages/VisionScanner';
+import Methodology from './pages/Methodology';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -15,8 +18,10 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Route */}
         <Route path="/" element={<Login />} />
         
+        {/* Protected Routes */}
         <Route 
           path="/dashboard" 
           element={
@@ -25,8 +30,34 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        
+        <Route 
+          path="/url-scanner" 
+          element={
+            <ProtectedRoute>
+              <UrlScanner />
+            </ProtectedRoute>
+          } 
+        />
 
-        {/* ADDED THIS NEW ROUTE */}
+        <Route 
+          path="/text-scanner" 
+          element={
+            <ProtectedRoute>
+              <TextScanner />
+            </ProtectedRoute>
+          } 
+        />
+
+        <Route 
+          path="/vision-scanner" 
+          element={
+            <ProtectedRoute>
+              <VisionScanner />
+            </ProtectedRoute>
+          } 
+        />
+
         <Route 
           path="/methodology" 
           element={

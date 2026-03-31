@@ -54,13 +54,22 @@ export default function Dashboard() {
           >
             <Activity size={20} /> Overview
           </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-xl font-medium transition-all group">
+          <button 
+            onClick={() => navigate('/url-scanner')}
+            className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-xl font-medium transition-all group"
+          >
             <LinkIcon className="group-hover:text-blue-400 transition-colors" size={20} /> URL Scanner
           </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-xl font-medium transition-all group">
+          <button 
+            onClick={() => navigate('/text-scanner')}
+            className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-xl font-medium transition-all group"
+          >
             <Mail className="group-hover:text-emerald-400 transition-colors" size={20} /> Text & Email Scanner
           </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-xl font-medium transition-all group">
+          <button 
+            onClick={() => navigate('/vision-scanner')}
+            className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-xl font-medium transition-all group"
+          >
             <ImageIcon className="group-hover:text-purple-400 transition-colors" size={20} /> Vision Scanner
           </button>
           
@@ -159,7 +168,10 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* URL Scanner Card */}
-            <div className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/50 transition-all cursor-pointer relative overflow-hidden">
+            <div 
+              onClick={() => navigate('/url-scanner')}
+              className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/50 transition-all cursor-pointer relative overflow-hidden"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
               <LinkIcon className="w-8 h-8 text-blue-400 mb-4" />
               <h3 className="text-lg font-bold text-white mb-2">URL Analysis</h3>
@@ -170,7 +182,10 @@ export default function Dashboard() {
             </div>
 
             {/* NLP Scanner Card */}
-            <div className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-emerald-500/50 transition-all cursor-pointer relative overflow-hidden">
+            <div 
+              onClick={() => navigate('/text-scanner')}
+              className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-emerald-500/50 transition-all cursor-pointer relative overflow-hidden"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-colors"></div>
               <Mail className="w-8 h-8 text-emerald-400 mb-4" />
               {/* NLP TEXT REMOVED BELOW */}
@@ -182,7 +197,10 @@ export default function Dashboard() {
             </div>
 
             {/* Vision Scanner Card */}
-            <div className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-purple-500/50 transition-all cursor-pointer relative overflow-hidden">
+            <div 
+              onClick={() => navigate('/vision-scanner')}
+              className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-purple-500/50 transition-all cursor-pointer relative overflow-hidden"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
               <ImageIcon className="w-8 h-8 text-purple-400 mb-4" />
               <h3 className="text-lg font-bold text-white mb-2">Vision Scanner</h3>
