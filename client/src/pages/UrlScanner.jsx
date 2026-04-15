@@ -3,6 +3,7 @@ import { Link as LinkIcon, Search, AlertOctagon, CheckCircle2, Loader2, ArrowRig
 
 export default function UrlScanner() {
   const [url, setUrl] = useState('');
+  const [scannedUrl, setScannedUrl] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [result, setResult] = useState(null); // 'safe', 'malicious', or null
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
@@ -14,6 +15,7 @@ export default function UrlScanner() {
     setIsScanning(true);
     setResult(null);
     setFeedbackSubmitted(false);
+    setScannedUrl(url);
 
     try {
       const response = await fetch('http://localhost:5000/api/scan/url', {
@@ -126,7 +128,7 @@ export default function UrlScanner() {
                       : 'Warning! This URL exhibits high-risk lexical features commonly used in credential harvesting and social engineering.'}
                   </p>
                   <div className="bg-slate-900/50 p-3 rounded-xl border border-slate-800 break-all font-mono text-xs md:text-sm text-slate-400">
-                    Target: {url}
+                    Target: {scannedUrl}
                   </div>
                 </div>
               </div>

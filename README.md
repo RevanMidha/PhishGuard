@@ -114,19 +114,26 @@ cd client && npm install && npm run dev
 git clone https://github.com/RevanMidha/PhishGuard.git
 cd PhishGuard
 
-# 2. Install and start the backend
-cd server && npm install && npm start
-# → API running at http://localhost:5000
+# 2. Start the Python ML Engine (Microservice)
+cd ml_engine
+python -m pip install -r requirements.txt
+python app.py
+# → ML Engine running at http://localhost:5001
 
-# 3. Install and start the frontend (open a new terminal)
+# 3. Install and start the backend (open a new terminal)
+cd server && npm install && npm start
+# → Node API running at http://localhost:5000
+
+# 4. Install and start the frontend (open a third terminal)
 cd client && npm install && npm run dev
-# → UI running at http://localhost:5173
+# → React UI running at http://localhost:5173
 ```
 
 ---
 
 ## 🔮 Roadmap
 
+- [ ] **Dual-Container Docker-Compose** — Update the Docker architecture to orchestrate both the Node API and Python ML microservices concurrently
 - [ ] **Browser Extension** — Chrome & Firefox integration to warn users before a page loads
 - [ ] **Email Integration** — API hooks for scanning incoming IMAP/SMTP mail in real time
 - [ ] **Live Traffic Dashboard** — Analytics panel for monitoring active threats across sessions
