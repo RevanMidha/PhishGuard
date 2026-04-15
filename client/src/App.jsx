@@ -1,71 +1,49 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import UrlScanner from './pages/UrlScanner';
-import TextScanner from './pages/TextScanner';
-import VisionScanner from './pages/VisionScanner';
-import Methodology from './pages/Methodology';
+import { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import DashboardLayout from './components/DashboardLayout';
+import { Loader2 } from 'lucide-react';
 
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return <Navigate to="/" replace />;
-  }
-  return children;
-};
+const Login = lazy(() => import('./pages/Login'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const UrlScanner = lazy(() => import('./pages/UrlScanner'));
+const TextScanner = lazy(() => import('./pages/TextScanner'));
+const VisionScanner = lazy(() => import('./pages/VisionScanner'));
+const Methodology = lazy(() => import('./pages/Methodology'));
+
+const PageLoader = () => (
+  <div className="flex h-screen w-full items-center justify-center bg-slate-950 text-slate-400">
+    <Loader2 className="animate-spin w-10 h-10" />
+  </div>
+);
+
+const ContentLoader = () => (
+  <div className="flex h-full w-full items-center justify-center text-slate-400 p-8">
+    <Loader2 className="animate-spin w-10 h-10" />
+  </div>
+);
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* Public Route */}
-        <Route path="/" element={<Login />} />
-        
-        {/* Protected Routes */}
         <Route 
-          path="/dashboard" 
+          path="/" 
           element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
+            <Suspense fallback={<PageLoader />}>
+              <Login />
+            </Suspense>
           } 
         />
         
-        <Route 
-          path="/url-scanner" 
-          element={
-            <ProtectedRoute>
-              <UrlScanner />
-            </ProtectedRoute>
-          } 
-        />
-
-        <Route 
-          path="/text-scanner" 
-          element={
-            <ProtectedRoute>
-              <TextScanner />
-            </ProtectedRoute>
-          } 
-        />
-
-        <Route 
-          path="/vision-scanner" 
-          element={
-            <ProtectedRoute>
-              <VisionScanner />
-            </ProtectedRoute>
-          } 
-        />
-
-        <Route 
-          path="/methodology" 
-          element={
-            <ProtectedRoute>
-              <Methodology />
-            </ProtectedRoute>
-          } 
-        />
+        {/* Protected Routes using Shared Layout */}
+        <Route path="/" element={<DashboardLayout />}>
+          <Route path="dashboard" element={<Suspense fallback={<ContentLoader />}><Dashboard /></Suspense>} />
+          <Route path="url-scanner" element={<Suspense fallback={<ContentLoader />}><UrlScanner /></Suspense>} />
+          <Route path="text-scanner" element={<Suspense fallback={<ContentLoader />}><TextScanner /></Suspense>} />
+          <Route path="vision-scanner" element={<Suspense fallback={<ContentLoader />}><VisionScanner /></Suspense>} />
+          <Route path="methodology" element={<Suspense fallback={<ContentLoader />}><Methodology /></Suspense>} />
+        </Route>
       </Routes>
     </Router>
   );

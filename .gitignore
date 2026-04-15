@@ -2,15 +2,20 @@
 # Environment variables
 # =========================
 .env
-server/.env
-client/.env
+.env.*
+!.env.example
 
 # =========================
 # Node.js
 # =========================
 node_modules/
 npm-debug.log
-package-lock.json
+
+# =========================
+# Build Outputs
+# =========================
+client/dist/
+build/
 
 # =========================
 # Python
@@ -21,12 +26,15 @@ __pycache__/
 *.pyc
 
 # =========================
-# ML Models / Weights
+# ML Models & Datasets
 # =========================
+# Ignore raw large datasets so GitHub doesn't block pulls
+*.csv
+# Ignore massive deep learning weights
 *.h5
 *.pt
 *.pb
-models/
+# Note: .pkl files are NOT ignored because the pre-trained URL/Text models must be pulled to run the engine.
 
 # =========================
 # OS / IDE
