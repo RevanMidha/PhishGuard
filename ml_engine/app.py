@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 
+from emails.text_scanner import analyze_text_message
 from urls.url_model_utils import predict_url_probabilities
+from vision.vision_scanner import analyze_screenshot
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +24,8 @@ try:
     text_model, text_threshold = joblib.load(TEXT_MODEL_PATH)
     print("All Models Loaded Successfully into Memory.")
 except Exception as e:
+    text_model = None
+    text_threshold = 0.4
     print(f"Error loading models. Have you run the training scripts? Exception: {e}")
 
 @app.route('/api/scan/url', methods=['POST'])
@@ -54,14 +58,22 @@ def scan_text():
         return jsonify({"error": "No text provided"}), 400
         
     try:
-        probability = text_model.predict_proba([text])[0][1]
-        result = "malicious" if probability >= text_threshold else "safe"
-        
-        return jsonify({
-            "result": result,
-            "confidence_score": float(probability),
-            "threshold_used": float(text_threshold)
-        })
+        return jsonify(analyze_text_message(text, model=text_model, model_threshold=text_threshold))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/scan/vision', methods=['POST'])
+def scan_vision():
+    data = request.json
+    image_data = data.get("imageData")
+    url = data.get("url")
+
+    if not image_data:
+        return jsonify({"error": "No image data provided"}), 400
+
+    try:
+        return jsonify(analyze_screenshot(image_data=image_data, url=url))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

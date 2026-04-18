@@ -297,16 +297,92 @@ def is_trusted(url):
     return False
 
 
+def heuristic_probability(url):
+    canonical = canonicalize_url(url)
+    hostname = host_from_url(canonical)
+    parsed = _safe_parse(canonical)
+    path = parsed.path if parsed is not None else ""
+    query = parsed.query if parsed is not None else ""
+    normalized_hostname = hostname.translate(LEET_TRANSLATION)
+    tld = hostname.rsplit(".", 1)[-1] if "." in hostname else ""
+    subdomain_count = max(len([part for part in hostname.split(".") if part]) - 2, 0)
+
+    if not hostname:
+        return 0.5
+    if is_trusted(canonical):
+        return 0.0
+
+    host_token_hits = sum(1 for token in SUSPICIOUS_TOKENS if token in hostname)
+    path_token_hits = sum(1 for token in SUSPICIOUS_TOKENS if token in path or token in query)
+    brand_mismatch_count = sum(
+        1
+        for brand in KNOWN_BRANDS
+        if brand in hostname
+        and hostname != f"{brand}.com"
+        and not hostname.endswith(f".{brand}.com")
+    )
+    brand_like_mismatch_count = sum(
+        1
+        for brand in KNOWN_BRANDS
+        if brand in normalized_hostname
+        and brand not in hostname
+        and hostname != f"{brand}.com"
+        and not hostname.endswith(f".{brand}.com")
+    )
+
+    score = 0.0
+    if re.search(r"\d+\.\d+\.\d+\.\d+", hostname):
+        score += 2.6
+    if "@" in canonical:
+        score += 2.0
+    if tld in SUSPICIOUS_TLDS:
+        score += 1.7
+    if subdomain_count >= 2:
+        score += 0.8
+    if hostname.count("-") >= 1:
+        score += 0.7
+    if len(canonical) >= 75:
+        score += 0.6
+    if "%" in canonical:
+        score += 0.6
+    if host_token_hits:
+        score += min(1.8, host_token_hits * 0.7)
+    if path_token_hits:
+        score += min(1.6, path_token_hits * 0.55)
+    if brand_mismatch_count:
+        score += 2.3
+    if brand_like_mismatch_count:
+        score += 2.6
+    if "xn--" in hostname:
+        score += 1.5
+    if "http" in hostname or "https" in hostname:
+        score += 1.3
+
+    floor = heuristic_floor(canonical)
+    return min(0.98, max(floor, score / 8.5))
+
+
 def predict_url_probabilities(urls, tfidf, extractor, clf):
     canonical_urls, X = build_feature_matrix(urls, tfidf, extractor)
-    probabilities = clf.predict_proba(X)[:, 1]
+    probabilities = None
+
+    if clf is not None:
+        try:
+            probabilities = clf.predict_proba(X)[:, 1]
+        except Exception:
+            probabilities = None
     
     adjusted = []
-    for url, probability in zip(canonical_urls, probabilities):
+    model_scores = probabilities if probabilities is not None else [None] * len(canonical_urls)
+    for url, probability in zip(canonical_urls, model_scores):
         if is_trusted(url):
             adjusted.append(0.0)
         else:
-            adjusted.append(max(probability, heuristic_floor(url)))
+            heuristic_score = heuristic_probability(url)
+            if probability is None:
+                adjusted.append(heuristic_score)
+            else:
+                adjusted.append(max(probability, heuristic_score))
             
     return canonical_urls, np.array(adjusted)
 

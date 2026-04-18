@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { ShieldCheck, Mail, Lock, User, ArrowRight, Globe, Shield, Loader2, AtSign } from 'lucide-react';
+import { ShieldCheck, Mail, Lock, User, ArrowRight, Loader2, AtSign } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../lib/api';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,7 +23,7 @@ export default function Login() {
     onSuccess: async (tokenResponse) => {
       try {
         // Send the Google token to our backend
-        const { data } = await axios.post('http://localhost:5000/api/auth/google', {
+        const { data } = await axios.post(`${API_BASE_URL}/api/auth/google`, {
           access_token: tokenResponse.access_token
         });
 
@@ -47,7 +48,7 @@ export default function Login() {
     setLoading(true);
     setError('');
 
-    const endpoint = isLogin ? 'http://localhost:5000/api/auth/login' : 'http://localhost:5000/api/auth/signup';
+    const endpoint = isLogin ? `${API_BASE_URL}/api/auth/login` : `${API_BASE_URL}/api/auth/signup`;
 
     try {
       const { data } = await axios.post(endpoint, formData);

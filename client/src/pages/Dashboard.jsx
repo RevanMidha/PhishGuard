@@ -1,36 +1,100 @@
-import { useState, useEffect } from 'react';
-import { Activity, AlertTriangle, Link as LinkIcon, Mail, Image as ImageIcon, ServerCrash, ShieldCheck } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Activity, AlertTriangle, Link as LinkIcon, Mail, Image as ImageIcon, ServerCrash, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { getJson } from '../lib/api';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [stats, setStats] = useState({ totalScans: null, threatsBlocked: null });
   const [engineStatus, setEngineStatus] = useState('checking');
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/scan/stats');
-        if (res.ok) {
-          const data = await res.json();
-          setStats({ totalScans: data.totalScans, threatsBlocked: data.threatsBlocked });
-          setEngineStatus('online');
-        } else {
-          setEngineStatus('offline');
-        }
-      } catch (err) {
+        const data = await getJson('/api/scan/stats');
+        setStats({ totalScans: data.totalScans, threatsBlocked: data.threatsBlocked });
+        setEngineStatus('online');
+        setLastUpdated(new Date());
+      } catch {
         setEngineStatus('offline');
       }
     };
-    
-    fetchStats();
-    // Poll to keep dashboard live
-    const interval = setInterval(fetchStats, 5000);
-    return () => clearInterval(interval);
+
+    let intervalId;
+
+    const startPolling = () => {
+      fetchStats();
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        if (document.visibilityState === 'visible') {
+          fetchStats();
+        }
+      }, 20000);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchStats();
+      }
+    };
+
+    startPolling();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
+
+  const modules = [
+    {
+      title: 'URL Analysis',
+      description: 'Lexical signals, suspicious tokens, brand mismatches, and safe-domain fallback handling.',
+      path: '/url-scanner',
+      icon: LinkIcon,
+      accent: 'blue',
+    },
+    {
+      title: 'Text & Email',
+      description: 'Hybrid NLP + heuristics to reduce false positives on normal messages while catching pressure tactics.',
+      path: '/text-scanner',
+      icon: Mail,
+      accent: 'emerald',
+    },
+    {
+      title: 'Vision Scanner',
+      description: 'OCR text, form cues, brand/domain checks, plus direct screenshot paste support.',
+      path: '/vision-scanner',
+      icon: ImageIcon,
+      accent: 'sky',
+    },
+  ];
+
+  const accentClasses = {
+    blue: 'text-blue-400 group-hover:text-blue-300 border-blue-500/50 bg-blue-500/5',
+    emerald: 'text-emerald-400 group-hover:text-emerald-300 border-emerald-500/50 bg-emerald-500/5',
+    sky: 'text-sky-300 group-hover:text-sky-200 border-sky-400/50 bg-sky-500/5',
+  };
 
   return (
     <div className="w-full h-full flex flex-col">
+      <div className="mb-8 rounded-3xl border border-slate-800 bg-slate-900/40 p-6 backdrop-blur-sm">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Control Center</p>
+            <h2 className="text-3xl font-bold text-white">Everything important at a glance</h2>
+            <p className="max-w-2xl text-slate-400">
+              PhishGuard now keeps the scanners aligned across URL, text, and screenshot workflows and pauses dashboard polling when the tab is hidden.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-800 bg-slate-950/60 px-4 py-3 text-sm text-slate-400">
+            Last refresh: <span className="font-medium text-slate-200">{lastUpdated ? lastUpdated.toLocaleTimeString() : 'Waiting for first response'}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl backdrop-blur-sm relative overflow-hidden">
@@ -78,49 +142,27 @@ export default function Dashboard() {
       {/* Scanners Section */}
       <h2 className="text-xl font-bold text-white mb-6">Active Modules</h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* URL Scanner Card */}
-        <div 
-          onClick={() => navigate('/url-scanner')}
-          className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-blue-500/50 transition-all cursor-pointer relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-          <LinkIcon className="w-8 h-8 text-blue-400 mb-4" />
-          <h3 className="text-lg font-bold text-white mb-2">URL Analysis</h3>
-          <p className="text-sm text-slate-400 mb-6">AI-driven lexical and feature extraction to detect malicious links in real-time.</p>
-          <button className="text-sm font-semibold text-blue-400 group-hover:text-blue-300 flex items-center gap-1">
-            Launch Scanner &rarr;
-          </button>
-        </div>
-
-        {/* NLP Scanner Card */}
-        <div 
-          onClick={() => navigate('/text-scanner')}
-          className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-emerald-500/50 transition-all cursor-pointer relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-colors"></div>
-          <Mail className="w-8 h-8 text-emerald-400 mb-4" />
-          <h3 className="text-lg font-bold text-white mb-2">Text & Email</h3>
-          <p className="text-sm text-slate-400 mb-6">Detect urgency, threat phrases, and social engineering attempts in text blocks.</p>
-          <button className="text-sm font-semibold text-emerald-400 group-hover:text-emerald-300 flex items-center gap-1">
-            Launch Scanner &rarr;
-          </button>
-        </div>
-
-        {/* Vision Scanner Card */}
-        <div 
-          onClick={() => navigate('/vision-scanner')}
-          className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-purple-500/50 transition-all cursor-pointer relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
-          <ImageIcon className="w-8 h-8 text-purple-400 mb-4" />
-          <h3 className="text-lg font-bold text-white mb-2">Vision Scanner</h3>
-          <p className="text-sm text-slate-400 mb-6">Upload screenshots to identify brand impersonation and fake login portals.</p>
-          <button className="text-sm font-semibold text-purple-400 group-hover:text-purple-300 flex items-center gap-1">
-            Launch Scanner &rarr;
-          </button>
-        </div>
-
+        {modules.map((module) => {
+          const Icon = module.icon;
+          const accent = accentClasses[module.accent];
+          return (
+            <div
+              key={module.path}
+              onClick={() => navigate(module.path)}
+              className="group bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/50 p-6 rounded-2xl hover:border-slate-600 transition-all cursor-pointer relative overflow-hidden"
+            >
+              <div className={`absolute top-0 right-0 h-32 w-32 rounded-full blur-2xl transition-colors ${accent.split(' ').slice(3).join(' ')}`}></div>
+              <div className={`inline-flex rounded-2xl border p-3 ${accent}`}>
+                <Icon className="w-7 h-7" />
+              </div>
+              <h3 className="mt-5 text-lg font-bold text-white mb-2">{module.title}</h3>
+              <p className="text-sm text-slate-400 mb-6">{module.description}</p>
+              <button className={`text-sm font-semibold flex items-center gap-2 ${accent.split(' ').slice(0, 2).join(' ')}`}>
+                Launch scanner <ArrowRight size={16} />
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
