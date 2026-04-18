@@ -5,10 +5,14 @@ import re
 from io import BytesIO
 from urllib.parse import urlparse
 
-import cv2
 import numpy as np
 import pytesseract
 from PIL import Image
+
+try:
+    import cv2
+except ModuleNotFoundError:
+    cv2 = None
 
 
 DEFAULT_TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -174,6 +178,13 @@ def _ocr_text(image):
 
 
 def _extract_shape_features(image):
+    if cv2 is None:
+        return {
+            "input_field_candidates": 0,
+            "button_candidates": 0,
+            "vision_backend": "ocr_only",
+        }
+
     cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 50, 150)
@@ -199,6 +210,7 @@ def _extract_shape_features(image):
     return {
         "input_field_candidates": min(input_like_boxes, 8),
         "button_candidates": min(button_like_boxes, 6),
+        "vision_backend": "opencv",
     }
 
 
@@ -334,6 +346,15 @@ def analyze_screenshot(image_path=None, url=None, image_data=None):
 
     if shape_features["button_candidates"] >= 1:
         risk_score += 0.6
+
+    if shape_features.get("vision_backend") == "ocr_only":
+        indicators.append(
+            _indicator(
+                "Reduced visual feature mode",
+                "OpenCV is not installed, so the scan is using OCR and text/domain analysis without layout box detection.",
+                "low",
+            )
+        )
 
     if detected_brand and host:
         allowed_domains = BRAND_KEYWORDS[detected_brand]["domains"]
