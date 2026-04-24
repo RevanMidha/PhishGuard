@@ -9,7 +9,8 @@ export const requestUrlScan = async (url) => {
             if (Date.now() - cached.timestamp < TTL) return cached.data;
         }
 
-        const response = await fetch('http://127.0.0.1:5001/api/scan/url', {
+        const mlUrl = process.env.ML_ENGINE_URL || 'http://ml_engine:5001';
+        const response = await fetch(`${mlUrl}/api/scan/url`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url })
@@ -35,7 +36,8 @@ export const requestTextScan = async (text) => {
             if (Date.now() - cached.timestamp < TTL) return cached.data;
         }
 
-        const response = await fetch('http://127.0.0.1:5001/api/scan/text', {
+        const mlUrl = process.env.ML_ENGINE_URL || 'http://ml_engine:5001';
+        const response = await fetch(`${mlUrl}/api/scan/text`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text })
@@ -56,7 +58,8 @@ export const requestTextScan = async (text) => {
 
 export const requestVisionScan = async ({ imageData, url }) => {
     try {
-        const response = await fetch('http://127.0.0.1:5001/api/scan/vision', {
+        const mlUrl = process.env.ML_ENGINE_URL || 'http://ml_engine:5001';
+        const response = await fetch(`${mlUrl}/api/scan/vision`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ imageData, url })
