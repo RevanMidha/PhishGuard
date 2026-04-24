@@ -46,36 +46,36 @@ export default function Methodology() {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="text-center space-y-3 mb-4">
-        <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Detection Methodology</p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-slate-400">
+        <p className="text-xs uppercase tracking-[0.35em] text-stone-500">Detection Methodology</p>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-stone-400">
           How PhishGuard makes a decision
         </h2>
-        <p className="text-slate-400 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-stone-400 max-w-3xl mx-auto leading-relaxed">
           PhishGuard does not rely on one model or one keyword list. It combines URL structure analysis, phishing-aware text heuristics, and screenshot verification so each scanner can explain what it saw and where the risk came from.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-5">
+        <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
           <div className="mb-3 inline-flex rounded-xl border border-amber-300/30 bg-amber-300/15 p-2 text-amber-200">
             <ScanSearch size={18} />
           </div>
           <h3 className="text-lg font-semibold text-white">Explainable results</h3>
-          <p className="mt-2 text-sm text-slate-400">Each scanner returns reasons, not just a verdict, so analysts can verify the call instead of trusting a black box.</p>
+          <p className="mt-2 text-sm text-stone-400">Each scanner returns reasons, not just a verdict, so analysts can verify the call instead of trusting a black box.</p>
         </div>
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-5">
+        <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
           <div className="mb-3 inline-flex rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-2 text-emerald-400">
             <ShieldCheck size={18} />
           </div>
           <h3 className="text-lg font-semibold text-white">False-positive guardrails</h3>
-          <p className="mt-2 text-sm text-slate-400">Safe-domain handling and conversational overrides help prevent harmless content from being labeled as phishing.</p>
+          <p className="mt-2 text-sm text-stone-400">Safe-domain handling and conversational overrides help prevent harmless content from being labeled as phishing.</p>
         </div>
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-5">
+        <div className="rounded-2xl border border-stone-800 bg-stone-900/50 p-5">
           <div className="mb-3 inline-flex rounded-xl border border-rose-300/30 bg-rose-300/15 p-2 text-rose-200">
             <Lock size={18} />
           </div>
           <h3 className="text-lg font-semibold text-white">Layered resilience</h3>
-          <p className="mt-2 text-sm text-slate-400">If one model is missing or uncertain, the surrounding heuristic layers still provide useful phishing risk coverage.</p>
+          <p className="mt-2 text-sm text-stone-400">If one model is missing or uncertain, the surrounding heuristic layers still provide useful phishing risk coverage.</p>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ export default function Methodology() {
         {modules.map((module) => {
           const Icon = module.icon;
           return (
-            <div key={module.title} className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl backdrop-blur-sm relative overflow-hidden group hover:border-slate-700 transition-all">
+            <div key={module.title} className="bg-stone-900/40 border border-stone-800 p-6 rounded-2xl backdrop-blur-sm relative overflow-hidden group hover:border-stone-700 transition-all">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] rounded-full blur-3xl"></div>
               <div className="flex items-start gap-4">
                 <div className={`p-3 rounded-xl border shrink-0 ${accentStyles[module.accent]}`}>
@@ -92,13 +92,13 @@ export default function Methodology() {
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-xl font-bold text-white mb-2">{module.title}</h3>
-                    <p className="text-slate-400 leading-relaxed">{module.summary}</p>
+                    <p className="text-stone-400 leading-relaxed">{module.summary}</p>
                   </div>
                   <div className="grid gap-3">
                     {module.bullets.map((bullet) => (
-                      <div key={bullet} className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 px-4 py-3">
+                      <div key={bullet} className="flex items-start gap-3 rounded-xl border border-stone-800 bg-stone-950/45 px-4 py-3">
                         <div className={`mt-1 h-2 w-2 rounded-full ${module.accent === 'amber' ? 'bg-amber-200' : module.accent === 'emerald' ? 'bg-emerald-400' : 'bg-rose-200'}`}></div>
-                        <p className="text-sm text-slate-300 leading-relaxed">{bullet}</p>
+                        <p className="text-sm text-stone-300 leading-relaxed">{bullet}</p>
                       </div>
                     ))}
                   </div>

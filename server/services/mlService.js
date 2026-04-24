@@ -1,6 +1,14 @@
+const urlCache = new Map();
+const textCache = new Map();
+const TTL = 60000; // 1 min
+
 export const requestUrlScan = async (url) => {
     try {
-        // We use native fetch here (Node 18+)
+        if (urlCache.has(url)) {
+            const cached = urlCache.get(url);
+            if (Date.now() - cached.timestamp < TTL) return cached.data;
+        }
+
         const response = await fetch('http://127.0.0.1:5001/api/scan/url', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -11,7 +19,9 @@ export const requestUrlScan = async (url) => {
             throw new Error(`ML Service responded with status ${response.status}`);
         }
         
-        return await response.json();
+        const data = await response.json();
+        urlCache.set(url, { data, timestamp: Date.now() });
+        return data;
     } catch (error) {
         console.error("ML Service URL Error:", error);
         throw error;
@@ -20,6 +30,11 @@ export const requestUrlScan = async (url) => {
 
 export const requestTextScan = async (text) => {
     try {
+        if (textCache.has(text)) {
+            const cached = textCache.get(text);
+            if (Date.now() - cached.timestamp < TTL) return cached.data;
+        }
+
         const response = await fetch('http://127.0.0.1:5001/api/scan/text', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -30,7 +45,9 @@ export const requestTextScan = async (text) => {
             throw new Error(`ML Service responded with status ${response.status}`);
         }
         
-        return await response.json();
+        const data = await response.json();
+        textCache.set(text, { data, timestamp: Date.now() });
+        return data;
     } catch (error) {
         console.error("ML Service Text Error:", error);
         throw error;

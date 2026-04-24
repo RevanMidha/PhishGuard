@@ -71,11 +71,25 @@ export const scanVision = async (req, res) => {
     }
 };
 
+let statsCache = { data: null, timestamp: 0 };
+const STATS_CACHE_TTL_MS = 5000;
+
 export const getStats = async (req, res) => {
     try {
-        const totalScans = await Scan.countDocuments();
+        const now = Date.now();
+        if (statsCache.data && (now - statsCache.timestamp < STATS_CACHE_TTL_MS)) {
+            return res.json(statsCache.data);
+        }
+
+        const totalScans = await Scan.estimatedDocumentCount();
         const threatsBlocked = await Scan.countDocuments({ result: { $in: ['malicious', 'suspicious'] } });
-        res.json({ totalScans, threatsBlocked });
+        
+        statsCache = {
+            data: { totalScans, threatsBlocked },
+            timestamp: now
+        };
+
+        res.json(statsCache.data);
     } catch (error) {
         console.error('Stats Controller Error:', error.message);
         res.status(500).json({ error: 'Failed to fetch telemetry stats' });

@@ -127,7 +127,7 @@ export default function VisionScanner() {
             <ImageIcon size={34} />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Scan Screenshots</h2>
-          <p className="text-slate-400">
+          <p className="text-stone-400">
             Upload a suspicious webpage screenshot. The scanner now checks OCR text, login and payment cues, urgency language, form-like layouts, and optional brand-to-domain mismatches.
           </p>
         </div>
@@ -137,39 +137,39 @@ export default function VisionScanner() {
           <div
             ref={pasteZoneRef}
             tabIndex={0}
-            className="relative rounded-3xl border border-slate-800 bg-neutral-950/70 p-3.5 md:p-5 focus:outline-none focus:ring-2 focus:ring-orange-300/40"
+            className="relative rounded-3xl border border-stone-800 bg-neutral-950/70 p-3.5 md:p-5 focus:outline-none focus:ring-2 focus:ring-orange-300/40"
           >
           {!previewUrl ? (
-          <label className="flex flex-col items-center justify-center w-full h-60 border-2 border-slate-700 border-dashed rounded-2xl cursor-pointer bg-neutral-900/60 hover:bg-neutral-800/60 hover:border-orange-300/50 transition-all">
+          <label className="flex flex-col items-center justify-center w-full h-60 border-2 border-stone-700 border-dashed rounded-2xl cursor-pointer bg-neutral-900/60 hover:bg-neutral-800/60 hover:border-orange-300/50 transition-all">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <UploadCloud className="w-12 h-12 text-slate-400 mb-4" />
-              <p className="mb-2 text-lg text-slate-300"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-              <p className="text-sm text-slate-500">PNG, JPG or JPEG</p>
+              <UploadCloud className="w-12 h-12 text-stone-400 mb-4" />
+              <p className="mb-2 text-lg text-stone-300"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+              <p className="text-sm text-stone-500">PNG, JPG or JPEG</p>
             </div>
             <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
           </label>
         ) : (
-          <div className="relative w-full rounded-2xl overflow-hidden border border-slate-700 bg-neutral-900 flex flex-col items-center p-4 gap-4">
-            <button onClick={clearImage} className="absolute top-4 right-4 p-2 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 transition-all z-10">
+          <div className="relative w-full rounded-2xl overflow-hidden border border-stone-700 bg-neutral-900 flex flex-col items-center p-4 gap-4">
+            <button onClick={clearImage} className="absolute top-4 right-4 p-2 bg-stone-800 rounded-full text-stone-400 hover:text-white hover:bg-stone-700 transition-all z-10">
               <X size={20} />
             </button>
             <img src={previewUrl} alt="Preview" className="max-h-64 object-contain rounded-lg" />
 
             <div className="w-full grid gap-3">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                <Search className="absolute left-4 top-1/2 -transtone-y-1/2 text-stone-500" size={18} />
                 <input
                   type="text"
                   value={websiteUrl}
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                   placeholder="Optional: paste the page URL or domain to validate the brand"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950/70 py-2.5 pl-11 pr-4 text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-orange-300/50"
+                  className="w-full rounded-xl border border-stone-700 bg-stone-950/70 py-2.5 pl-11 pr-4 text-stone-200 placeholder:text-stone-500 focus:outline-none focus:border-orange-300/50"
                 />
               </div>
               <button
                 onClick={handleScan}
                 disabled={isScanning}
-                className="bg-orange-300 hover:bg-orange-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-6 py-2.5 rounded-xl font-bold transition-all w-full flex justify-center items-center gap-2"
+                className="bg-orange-300 hover:bg-orange-200 disabled:bg-stone-800 disabled:text-stone-500 text-stone-950 px-6 py-2.5 rounded-xl font-bold transition-all w-full flex justify-center items-center gap-2"
               >
                 {isScanning ? <><Loader2 className="animate-spin" size={20} /> Analyzing Image...</> : 'Run Visual Scan'}
               </button>
@@ -177,12 +177,12 @@ export default function VisionScanner() {
           </div>
         )}
 
-          <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+          <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-stone-800 bg-stone-900/70 px-4 py-3 text-sm text-stone-400 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2">
               <ClipboardPaste size={16} className="text-amber-200" />
               <span>{pasteHint}</span>
             </div>
-            <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Focus here and press Ctrl+V</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-stone-500">Focus here and press Ctrl+V</span>
           </div>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function VisionScanner() {
                         console.error(feedbackError);
                       }
                     }}
-                    className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white bg-slate-900/60 hover:bg-slate-800 border border-slate-700/50 rounded-lg px-3 py-1.5 transition-all"
+                    className="flex items-center gap-1.5 text-xs font-medium text-stone-400 hover:text-white bg-stone-900/60 hover:bg-stone-800 border border-stone-700/50 rounded-lg px-3 py-1.5 transition-all"
                   >
                     <Flag size={12} />
                     Report False {scan.result === 'safe' ? 'Negative' : 'Positive'}
@@ -225,23 +225,23 @@ export default function VisionScanner() {
                 <div className="w-full space-y-4">
                   <div>
                     <h3 className={`text-xl font-bold ${tone.title}`}>{tone.headline}</h3>
-                    <p className="text-slate-300 text-sm mt-1 w-full md:w-10/12">{scan.summary}</p>
+                    <p className="text-stone-300 text-sm mt-1 w-full md:w-10/12">{scan.summary}</p>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
                     <div className={`px-3 py-2 rounded-lg text-sm ${tone.badge}`}>
                       Risk score: <span className="font-semibold">{risk}%</span>
                     </div>
-                    <div className="px-3 py-2 rounded-lg text-sm bg-slate-900/70 border border-slate-700 text-slate-300">
+                    <div className="px-3 py-2 rounded-lg text-sm bg-stone-900/70 border border-stone-700 text-stone-300">
                       Verdict confidence: <span className="font-semibold">{confidence}%</span>
                     </div>
                     {scan.detected_brand && (
-                      <div className="px-3 py-2 rounded-lg text-sm bg-slate-900/70 border border-slate-700 text-slate-300">
+                      <div className="px-3 py-2 rounded-lg text-sm bg-stone-900/70 border border-stone-700 text-stone-300">
                         Detected brand: <span className="font-semibold capitalize">{scan.detected_brand}</span>
                       </div>
                     )}
                     {scan.supplied_domain && (
-                      <div className="px-3 py-2 rounded-lg text-sm bg-slate-900/70 border border-slate-700 text-slate-300">
+                      <div className="px-3 py-2 rounded-lg text-sm bg-stone-900/70 border border-stone-700 text-stone-300">
                         Domain checked: <span className="font-semibold">{scan.supplied_domain}</span>
                       </div>
                     )}
@@ -249,18 +249,18 @@ export default function VisionScanner() {
 
                   {scan.visual_features && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">
-                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Form cues</p>
-                        <p className="text-sm text-slate-300 mt-2">
+                      <div className="rounded-xl border border-stone-800 bg-stone-950/50 px-4 py-3">
+                        <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Form cues</p>
+                        <p className="text-sm text-stone-300 mt-2">
                           Input-like regions: <span className="font-semibold text-white">{scan.visual_features.input_field_candidates}</span>
                         </p>
-                        <p className="text-sm text-slate-300 mt-1">
+                        <p className="text-sm text-stone-300 mt-1">
                           Button-like regions: <span className="font-semibold text-white">{scan.visual_features.button_candidates}</span>
                         </p>
                       </div>
-                      <div className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">
-                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">OCR preview</p>
-                        <p className="text-sm text-slate-400 mt-2 line-clamp-4">
+                      <div className="rounded-xl border border-stone-800 bg-stone-950/50 px-4 py-3">
+                        <p className="text-xs uppercase tracking-[0.2em] text-stone-500">OCR preview</p>
+                        <p className="text-sm text-stone-400 mt-2 line-clamp-4">
                           {scan.extracted_text_preview || 'No readable text was extracted from the screenshot.'}
                         </p>
                       </div>
@@ -270,12 +270,12 @@ export default function VisionScanner() {
                   {scan.indicators?.length > 0 && (
                     <div className="grid gap-3">
                       {scan.indicators.map((indicator, index) => (
-                        <div key={`${indicator.label}-${index}`} className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">
+                        <div key={`${indicator.label}-${index}`} className="rounded-xl border border-stone-800 bg-stone-950/50 px-4 py-3">
                           <div className="flex items-center justify-between gap-3">
                             <p className="text-sm font-semibold text-white">{indicator.label}</p>
-                            <span className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{indicator.severity}</span>
+                            <span className="text-[11px] uppercase tracking-[0.2em] text-stone-500">{indicator.severity}</span>
                           </div>
-                          <p className="text-sm text-slate-400 mt-1">{indicator.detail}</p>
+                          <p className="text-sm text-stone-400 mt-1">{indicator.detail}</p>
                         </div>
                       ))}
                     </div>

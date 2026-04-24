@@ -14,7 +14,8 @@ const scanSchema = mongoose.Schema(
     result: {
       type: String,
       required: true,
-      enum: ['safe', 'suspicious', 'malicious', 'error']
+      enum: ['safe', 'suspicious', 'malicious', 'error'],
+      index: true
     },
     confidenceScore: {
       type: Number,

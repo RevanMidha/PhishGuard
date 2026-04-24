@@ -42,14 +42,14 @@ export default function Header({ user }) {
   const pageMeta = getPageMeta();
 
   return (
-    <header className="h-16 flex items-center justify-between px-6 border-b border-slate-800/50 bg-slate-900/30 backdrop-blur-md z-20 relative">
+    <header className="h-16 flex items-center justify-between px-6 border-b border-stone-800/50 bg-stone-900/30 backdrop-blur-md z-20 relative">
       <div className="flex items-center gap-4 md:hidden">
-         <Menu className="text-slate-400" />
+         <Menu className="text-stone-400" />
          <span className="font-bold text-white">PhishGuard</span>
       </div>
       <div className="hidden md:block">
         <h1 className="text-xl font-bold text-white">{pageMeta.title}</h1>
-        <p className="text-sm text-slate-400">{pageMeta.subtitle}</p>
+        <p className="text-sm text-stone-400">{pageMeta.subtitle}</p>
       </div>
       
       <div className="flex items-center gap-4">
@@ -57,7 +57,7 @@ export default function Header({ user }) {
           <ShieldCheck size={14} />
           Secure workspace
         </div>
-        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-300 to-rose-300 flex items-center justify-center text-slate-950 font-bold border-2 border-slate-800">
+        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-300 to-rose-300 flex items-center justify-center text-stone-950 font-bold border-2 border-stone-800">
           {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
         </div>
       </div>

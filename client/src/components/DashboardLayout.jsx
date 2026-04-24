@@ -20,7 +20,7 @@ export default function DashboardLayout() {
   }, [navigate]);
 
   return (
-    <div className="relative h-screen w-full flex overflow-hidden bg-[#1d1411] font-sans text-slate-200">
+    <div className="relative h-screen w-full flex overflow-hidden bg-[#1d1411] font-sans text-stone-200">
       
       {/* --- ANIMATED BACKGROUND --- */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0">

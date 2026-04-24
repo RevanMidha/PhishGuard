@@ -54,27 +54,27 @@ export default function UrlScanner() {
             <LinkIcon size={34} />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Is this link safe?</h2>
-          <p className="text-slate-400">
+          <p className="text-stone-400">
             Paste a URL below. The engine checks lexical features, suspicious brand lookalikes, and heuristic fallback rules when the model is uncertain.
           </p>
         </div>
 
         <form onSubmit={handleScan} className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-amber-300 to-rose-300 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative flex items-center bg-neutral-900 border border-slate-700 rounded-2xl p-1.5 shadow-2xl shadow-orange-950/20">
-            <Search className="w-6 h-6 text-slate-500 ml-4" />
+          <div className="relative flex items-center bg-neutral-900 border border-stone-700 rounded-2xl p-1.5 shadow-2xl shadow-orange-950/20">
+            <Search className="w-6 h-6 text-stone-500 ml-4" />
             <input
               type="url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://example.com/login"
-              className="flex-1 w-full bg-transparent border-none text-lg text-white px-4 py-4 focus:outline-none placeholder:text-slate-600"
+              className="flex-1 w-full bg-transparent border-none text-lg text-white px-4 py-4 focus:outline-none placeholder:text-stone-600"
               required
             />
             <button
               type="submit"
               disabled={isScanning || !url}
-              className="bg-orange-300 hover:bg-orange-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-6 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2"
+              className="bg-orange-300 hover:bg-orange-200 disabled:bg-stone-800 disabled:text-stone-500 text-stone-950 px-6 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2"
             >
               {isScanning ? <><Loader2 className="animate-spin" size={20} /> Analyzing...</> : <>Scan URL <ArrowRight size={20} /></>}
             </button>
@@ -100,7 +100,7 @@ export default function UrlScanner() {
                         console.error(feedbackError);
                       }
                     }}
-                    className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white bg-slate-900/60 hover:bg-slate-800 border border-slate-700/50 rounded-lg px-3 py-1.5 transition-all"
+                    className="flex items-center gap-1.5 text-xs font-medium text-stone-400 hover:text-white bg-stone-900/60 hover:bg-stone-800 border border-stone-700/50 rounded-lg px-3 py-1.5 transition-all"
                   >
                     <Flag size={12} />
                     Report False {scan.result === 'safe' ? 'Negative' : 'Positive'}
@@ -119,7 +119,7 @@ export default function UrlScanner() {
                 <div className="w-full space-y-4">
                   <div>
                     <h3 className={`text-xl md:text-2xl font-bold mb-2 ${tone.title}`}>{tone.headline}</h3>
-                    <p className="text-slate-300 text-sm md:text-base w-full md:w-11/12">
+                    <p className="text-stone-300 text-sm md:text-base w-full md:w-11/12">
                       {scan.summary || (
                         scan.result === 'safe'
                           ? 'The scanned domain stayed below the phishing threshold and did not trigger the heuristic risk floor.'
@@ -132,19 +132,19 @@ export default function UrlScanner() {
                     <div className={`px-3 py-2 rounded-lg text-sm ${tone.badge}`}>
                       Risk confidence: <span className="font-semibold">{confidence}%</span>
                     </div>
-                    <div className="px-3 py-2 rounded-lg text-sm bg-slate-900/70 border border-slate-700 text-slate-300">
+                    <div className="px-3 py-2 rounded-lg text-sm bg-stone-900/70 border border-stone-700 text-stone-300">
                       Detection threshold: <span className="font-semibold">{threshold}%</span>
                     </div>
                   </div>
 
                   <div className="grid gap-3">
-                    <div className="bg-slate-900/50 p-3 rounded-xl border border-slate-800 break-all">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500 mb-2">Submitted URL</p>
-                      <p className="font-mono text-xs md:text-sm text-slate-300">{scan.url || url}</p>
+                    <div className="bg-stone-900/50 p-3 rounded-xl border border-stone-800 break-all">
+                      <p className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Submitted URL</p>
+                      <p className="font-mono text-xs md:text-sm text-stone-300">{scan.url || url}</p>
                     </div>
-                    <div className="bg-slate-900/50 p-3 rounded-xl border border-slate-800 break-all">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500 mb-2">Canonical form</p>
-                      <p className="font-mono text-xs md:text-sm text-slate-300">{scan.canonical_url || url}</p>
+                    <div className="bg-stone-900/50 p-3 rounded-xl border border-stone-800 break-all">
+                      <p className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-2">Canonical form</p>
+                      <p className="font-mono text-xs md:text-sm text-stone-300">{scan.canonical_url || url}</p>
                     </div>
                   </div>
                 </div>

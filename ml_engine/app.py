@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
+from functools import lru_cache
 
 from emails.text_scanner import analyze_text_message
 from urls.url_model_utils import predict_url_probabilities
@@ -28,6 +29,23 @@ except Exception as e:
     text_threshold = 0.4
     print(f"Error loading models. Have you run the training scripts? Exception: {e}")
 
+@lru_cache(maxsize=1024)
+def cached_scan_url(url):
+    canonical_urls, probabilities = predict_url_probabilities([url], tfidf, extractor, clf)
+    probability = probabilities[0]
+    result = "malicious" if probability >= threshold else "safe"
+    return {
+        "url": url,
+        "canonical_url": canonical_urls[0],
+        "result": result,
+        "confidence_score": float(probability),
+        "threshold_used": float(threshold)
+    }
+
+@lru_cache(maxsize=1024)
+def cached_scan_text(text):
+    return analyze_text_message(text, model=text_model, model_threshold=text_threshold)
+
 @app.route('/api/scan/url', methods=['POST'])
 def scan_url():
     data = request.json
@@ -36,17 +54,7 @@ def scan_url():
         return jsonify({"error": "No URL provided"}), 400
     
     try:
-        canonical_urls, probabilities = predict_url_probabilities([url], tfidf, extractor, clf)
-        probability = probabilities[0]
-        result = "malicious" if probability >= threshold else "safe"
-        
-        return jsonify({
-            "url": url,
-            "canonical_url": canonical_urls[0],
-            "result": result,
-            "confidence_score": float(probability),
-            "threshold_used": float(threshold)
-        })
+        return jsonify(cached_scan_url(url))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -58,7 +66,7 @@ def scan_text():
         return jsonify({"error": "No text provided"}), 400
         
     try:
-        return jsonify(analyze_text_message(text, model=text_model, model_threshold=text_threshold))
+        return jsonify(cached_scan_text(text))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

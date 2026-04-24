@@ -64,13 +64,13 @@ export default function Login() {
   };
 
   return (
-    <div className="fixed inset-0 w-full h-full flex items-center justify-center bg-slate-950 font-sans selection:bg-amber-300/30">
+    <div className="fixed inset-0 w-full h-full flex items-center justify-center bg-stone-950 font-sans selection:bg-amber-300/30">
       
       {/* Background blobs kept the same */}
       <div className="absolute inset-0 w-full h-full pointer-events-none">
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(251,191,118,0.25),transparent_40%),radial-gradient(circle_at_84%_12%,rgba(253,186,116,0.24),transparent_42%),radial-gradient(circle_at_68%_78%,rgba(253,164,175,0.2),transparent_45%)]"></div>
          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15 brightness-110 contrast-125"></div>
-         <div className="absolute inset-0 bg-slate-950/88"></div>
+         <div className="absolute inset-0 bg-stone-950/88"></div>
          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl opacity-22 animate-blob"></div>
          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-22 animate-blob animation-delay-2000"></div>
          <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-rose-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -87,23 +87,23 @@ export default function Login() {
              <h1 className="text-2xl font-bold text-white tracking-tight">PhishGuard</h1>
           </div>
           <div className="space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-slate-400 leading-tight">
+            <h2 className="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-stone-400 leading-tight">
               Security for the <br/> Modern Web.
             </h2>
-            <p className="text-base text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-base text-stone-400 leading-relaxed max-w-sm">
               Detect phishing attacks in real-time with our AI-driven multimodal analysis engine.
             </p>
           </div>
         </div>
 
         {/* RIGHT SIDE: Auth Card */}
-        <div className="w-full max-w-[380px] bg-slate-900/60 backdrop-blur-xl border border-white/10 p-7 rounded-2xl shadow-2xl shadow-black/50 animate-fade-in my-auto">
+        <div className="w-full max-w-[380px] bg-stone-900/60 backdrop-blur-xl border border-white/10 p-7 rounded-2xl shadow-2xl shadow-black/50 animate-fade-in my-auto">
           
           <div className="text-center mb-6">
             <h3 className="text-2xl font-bold text-white mb-1">
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </h3>
-            <p className="text-slate-400 text-xs">
+            <p className="text-stone-400 text-xs">
               {isLogin ? 'Enter your credentials to access your dashboard' : 'Join PhishGuard to verify your identity'}
             </p>
           </div>
@@ -122,14 +122,14 @@ export default function Login() {
               <>
                 <div className="space-y-1">
                   <div className="relative group">
-                    <User className="absolute left-3 top-2.5 w-5 h-5 text-slate-500 group-focus-within:text-amber-200 transition-colors" />
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} autoComplete="off" className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-slate-600" placeholder="Full Name" required={!isLogin} />
+                    <User className="absolute left-3 top-2.5 w-5 h-5 text-stone-500 group-focus-within:text-amber-200 transition-colors" />
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} autoComplete="off" className="w-full bg-stone-950/50 border border-stone-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-stone-600" placeholder="Full Name" required={!isLogin} />
                   </div>
                 </div>
                 <div className="space-y-1">
                   <div className="relative group">
-                    <Mail className="absolute left-3 top-2.5 w-5 h-5 text-slate-500 group-focus-within:text-amber-200 transition-colors" />
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} autoComplete="off" className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-slate-600" placeholder="Email Address" required={!isLogin} />
+                    <Mail className="absolute left-3 top-2.5 w-5 h-5 text-stone-500 group-focus-within:text-amber-200 transition-colors" />
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} autoComplete="off" className="w-full bg-stone-950/50 border border-stone-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-stone-600" placeholder="Email Address" required={!isLogin} />
                   </div>
                 </div>
               </>
@@ -138,14 +138,14 @@ export default function Login() {
             {/* SHARED FIELD: USERNAME */}
             <div className="space-y-1">
               <div className="relative group">
-                <AtSign className="absolute left-3 top-2.5 w-5 h-5 text-slate-500 group-focus-within:text-amber-200 transition-colors" />
+                <AtSign className="absolute left-3 top-2.5 w-5 h-5 text-stone-500 group-focus-within:text-amber-200 transition-colors" />
                 <input
                   type="text"
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
                   autoComplete="new-username"
-                  className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-slate-600"
+                  className="w-full bg-stone-950/50 border border-stone-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-stone-600"
                   placeholder="Username"
                   required
                 />
@@ -155,14 +155,14 @@ export default function Login() {
             {/* SHARED FIELD: PASSWORD */}
             <div className="space-y-1">
               <div className="relative group">
-                <Lock className="absolute left-3 top-2.5 w-5 h-5 text-slate-500 group-focus-within:text-amber-200 transition-colors" />
+                <Lock className="absolute left-3 top-2.5 w-5 h-5 text-stone-500 group-focus-within:text-amber-200 transition-colors" />
                 <input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="new-password" // Stops Chrome yellow background
-                  className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-slate-600"
+                  className="w-full bg-stone-950/50 border border-stone-800 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300/50 focus:border-amber-300 transition-all placeholder:text-stone-600"
                   placeholder="Password"
                   required
                 />
@@ -181,21 +181,21 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-300 hover:bg-orange-200 text-slate-950 font-semibold py-2.5 rounded-lg transition-all shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2 group disabled:opacity-70 mt-2 text-sm"
+              className="w-full bg-orange-300 hover:bg-orange-200 text-stone-950 font-semibold py-2.5 rounded-lg transition-all shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2 group disabled:opacity-70 mt-2 text-sm"
             >
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>{isLogin ? 'Sign In' : 'Create Account'} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>}
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>{isLogin ? 'Sign In' : 'Create Account'} <ArrowRight className="w-4 h-4 group-hover:transtone-x-1 transition-transform" /></>}
             </button>
 
             {/* GOOGLE AUTH BUTTON */}
             <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-800"></div></div>
-              <div className="relative flex justify-center text-xs"><span className="bg-slate-900 px-2 text-slate-500">Or continue with</span></div>
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-stone-800"></div></div>
+              <div className="relative flex justify-center text-xs"><span className="bg-stone-900 px-2 text-stone-500">Or continue with</span></div>
             </div>
             
             <button
               type="button"
               onClick={() => loginWithGoogle()}
-              className="w-full bg-slate-950/50 border border-slate-800 hover:bg-slate-800 text-slate-300 font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 text-sm"
+              className="w-full bg-stone-950/50 border border-stone-800 hover:bg-stone-800 text-stone-300 font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 text-sm"
             >
               {/* Google SVG Logo */}
               <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -209,7 +209,7 @@ export default function Login() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-slate-400 text-xs">
+            <p className="text-stone-400 text-xs">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button onClick={() => setIsLogin(!isLogin)} className="ml-1 text-amber-200 hover:text-amber-100 font-medium hover:underline transition-all">
                 {isLogin ? 'Sign up' : 'Log in'}

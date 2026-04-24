@@ -53,7 +53,7 @@ export default function TextScanner() {
             <Mail size={34} />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Analyze Email & Text</h2>
-          <p className="text-slate-400">
+          <p className="text-stone-400">
             Paste an email, SMS, or message. PhishGuard now blends NLP with phishing-specific safety heuristics so normal conversation is less likely to get mislabeled.
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function TextScanner() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Paste the message here..."
-                className="w-full bg-transparent border-none text-base text-white p-2 focus:outline-none placeholder:text-slate-600 resize-none h-44"
+                className="w-full bg-transparent border-none text-base text-white p-2 focus:outline-none placeholder:text-stone-600 resize-none h-44"
                 required
               />
             </div>
@@ -74,7 +74,7 @@ export default function TextScanner() {
           <button
             type="submit"
             disabled={isScanning || !text}
-            className="bg-orange-300 hover:bg-orange-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 w-full md:w-auto self-end"
+            className="bg-orange-300 hover:bg-orange-200 disabled:bg-stone-800 disabled:text-stone-500 text-stone-950 px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 w-full md:w-auto self-end"
           >
             {isScanning ? <><Loader2 className="animate-spin" size={20} /> Analyzing Text...</> : <>Scan Content <Search size={20} /></>}
           </button>
@@ -99,7 +99,7 @@ export default function TextScanner() {
                         console.error(feedbackError);
                       }
                     }}
-                    className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white bg-slate-900/60 hover:bg-slate-800 border border-slate-700/50 rounded-lg px-3 py-1.5 transition-all"
+                    className="flex items-center gap-1.5 text-xs font-medium text-stone-400 hover:text-white bg-stone-900/60 hover:bg-stone-800 border border-stone-700/50 rounded-lg px-3 py-1.5 transition-all"
                   >
                     <Flag size={12} />
                     Report False {scan.result === 'safe' ? 'Negative' : 'Positive'}
@@ -118,18 +118,18 @@ export default function TextScanner() {
                 <div className="w-full space-y-4">
                   <div>
                     <h3 className={`text-xl font-bold ${tone.title}`}>{tone.headline}</h3>
-                    <p className="text-slate-300 text-sm mt-1 w-full md:w-10/12">{scan.summary}</p>
+                    <p className="text-stone-300 text-sm mt-1 w-full md:w-10/12">{scan.summary}</p>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
                     <div className={`px-3 py-2 rounded-lg text-sm ${tone.badge}`}>
                       Risk score: <span className="font-semibold">{risk}%</span>
                     </div>
-                    <div className="px-3 py-2 rounded-lg text-sm bg-slate-900/70 border border-slate-700 text-slate-300">
+                    <div className="px-3 py-2 rounded-lg text-sm bg-stone-900/70 border border-stone-700 text-stone-300">
                       Verdict confidence: <span className="font-semibold">{confidence}%</span>
                     </div>
                     {typeof scan.model_score === 'number' && (
-                      <div className="px-3 py-2 rounded-lg text-sm bg-slate-900/70 border border-slate-700 text-slate-300">
+                      <div className="px-3 py-2 rounded-lg text-sm bg-stone-900/70 border border-stone-700 text-stone-300">
                         Model signal: <span className="font-semibold">{Math.round(scan.model_score * 100)}%</span>
                       </div>
                     )}
@@ -138,12 +138,12 @@ export default function TextScanner() {
                   {scan.indicators?.length > 0 && (
                     <div className="grid gap-3">
                       {scan.indicators.map((indicator, index) => (
-                        <div key={`${indicator.label}-${index}`} className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">
+                        <div key={`${indicator.label}-${index}`} className="rounded-xl border border-stone-800 bg-stone-950/50 px-4 py-3">
                           <div className="flex items-center justify-between gap-3">
                             <p className="text-sm font-semibold text-white">{indicator.label}</p>
-                            <span className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{indicator.severity}</span>
+                            <span className="text-[11px] uppercase tracking-[0.2em] text-stone-500">{indicator.severity}</span>
                           </div>
-                          <p className="text-sm text-slate-400 mt-1">{indicator.detail}</p>
+                          <p className="text-sm text-stone-400 mt-1">{indicator.detail}</p>
                         </div>
                       ))}
                     </div>
