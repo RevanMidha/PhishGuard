@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import joblib
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.feature_extraction.text import TfidfVectorizer
 
