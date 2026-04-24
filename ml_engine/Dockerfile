@@ -7,6 +7,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     gcc \
     python3-dev \
+    libgl1 \
+    libglib2.0-0 \
+    tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
