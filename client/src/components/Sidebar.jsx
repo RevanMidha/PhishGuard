@@ -14,13 +14,13 @@ export default function Sidebar() {
   const navItems = [
     { 
       name: 'Overview', path: '/dashboard', icon: Activity, 
-      activeClass: 'bg-blue-600/10 text-blue-400 border-blue-500/20', 
-      hoverClass: 'group-hover:text-blue-400' 
+      activeClass: 'bg-amber-400/10 text-amber-200 border-amber-300/30', 
+      hoverClass: 'group-hover:text-amber-200' 
     },
     { 
       name: 'URL Scanner', path: '/url-scanner', icon: LinkIcon, 
-      activeClass: 'bg-blue-600/10 text-blue-400 border-blue-500/20', 
-      hoverClass: 'group-hover:text-blue-400' 
+      activeClass: 'bg-amber-400/10 text-amber-200 border-amber-300/30', 
+      hoverClass: 'group-hover:text-amber-200' 
     },
     { 
       name: 'Text & Email Scanner', path: '/text-scanner', icon: Mail, 
@@ -29,15 +29,15 @@ export default function Sidebar() {
     },
     { 
       name: 'Vision Scanner', path: '/vision-scanner', icon: ImageIcon, 
-      activeClass: 'bg-purple-600/10 text-purple-400 border-purple-500/20', 
-      hoverClass: 'group-hover:text-purple-400' 
+      activeClass: 'bg-rose-400/10 text-rose-200 border-rose-300/30', 
+      hoverClass: 'group-hover:text-rose-200' 
     },
   ];
 
   return (
     <div className="relative w-64 bg-slate-900/50 backdrop-blur-xl border-r border-slate-800 hidden md:flex flex-col z-20">
-      <div className="p-6 flex items-center gap-3 border-b border-slate-800/50">
-        <div className="p-2 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-900/20">
+      <div className="p-5 flex items-center gap-3 border-b border-slate-800/50">
+        <div className="p-2 rounded-lg bg-gradient-to-br from-amber-300 to-rose-300 shadow-lg shadow-orange-900/20">
           <ShieldCheck className="text-white w-6 h-6" />
         </div>
         <span className="text-xl font-bold text-white tracking-tight">PhishGuard</span>
@@ -51,7 +51,7 @@ export default function Sidebar() {
             <button 
               key={item.path}
               onClick={() => navigate(item.path)} 
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium border transition-all group ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium border transition-all group ${
                 isActive 
                   ? item.activeClass
                   : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border-transparent'
@@ -66,13 +66,13 @@ export default function Sidebar() {
         <div className="pt-4 mt-4 border-t border-slate-700"> 
           <button 
             onClick={() => navigate('/methodology')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium border transition-all group ${
+            className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium border transition-all group ${
               location.pathname === '/methodology'
-                ? 'bg-amber-600/10 text-amber-500 border-amber-500/20'
+                ? 'bg-amber-400/10 text-amber-200 border-amber-300/30'
                 : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border-transparent'
             }`}
           >
-            <BookOpen className={location.pathname === '/methodology' ? '' : 'group-hover:text-amber-400 transition-colors'} size={20} /> 
+            <BookOpen className={location.pathname === '/methodology' ? '' : 'group-hover:text-amber-200 transition-colors'} size={20} /> 
             Our Methodology
           </button>
         </div>

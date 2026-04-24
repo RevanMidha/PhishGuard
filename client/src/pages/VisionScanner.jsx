@@ -1,41 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { ImageIcon, UploadCloud, AlertOctagon, CheckCircle2, Loader2, X, Flag, ShieldAlert, Search, ClipboardPaste } from 'lucide-react';
+import { ImageIcon, UploadCloud, CheckCircle2, Loader2, X, Flag, Search, ClipboardPaste } from 'lucide-react';
 import { postJson, submitFeedback } from '../lib/api';
+import { createResultStyles, getPercent } from '../lib/scanUi';
 
-const RESULT_STYLES = {
-  safe: {
-    card: 'bg-emerald-950/30 border-emerald-500/50 shadow-lg shadow-emerald-900/20',
-    iconWrap: 'bg-emerald-500/20 text-emerald-400',
-    title: 'text-emerald-400',
-    badge: 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20',
-    headline: 'Visuals Look Safe',
-    Icon: CheckCircle2
-  },
-  suspicious: {
-    card: 'bg-amber-950/30 border-amber-500/50 shadow-lg shadow-amber-900/20',
-    iconWrap: 'bg-amber-500/20 text-amber-300',
-    title: 'text-amber-300',
-    badge: 'bg-amber-500/10 text-amber-200 border border-amber-500/20',
-    headline: 'Visual Scan Needs Review',
-    Icon: ShieldAlert
-  },
-  malicious: {
-    card: 'bg-red-950/30 border-red-500/50 shadow-lg shadow-red-900/20',
-    iconWrap: 'bg-red-500/20 text-red-400',
-    title: 'text-red-400',
-    badge: 'bg-red-500/10 text-red-200 border border-red-500/20',
-    headline: 'Likely Phishing Screenshot',
-    Icon: AlertOctagon
-  },
-  error: {
-    card: 'bg-slate-900/60 border-slate-700 shadow-lg shadow-slate-950/40',
-    iconWrap: 'bg-slate-700 text-slate-200',
-    title: 'text-slate-100',
-    badge: 'bg-slate-800 text-slate-300 border border-slate-700',
-    headline: 'Scan Failed',
-    Icon: AlertOctagon
-  }
-};
+const RESULT_STYLES = createResultStyles({
+  safe: 'Visuals Look Safe',
+  suspicious: 'Visual Scan Needs Review',
+  malicious: 'Likely Phishing Screenshot',
+  error: 'Scan Failed',
+});
 
 const fileToDataUrl = (file) => new Promise((resolve, reject) => {
   const reader = new FileReader();
@@ -143,29 +116,31 @@ export default function VisionScanner() {
 
   const tone = RESULT_STYLES[scan?.result || 'safe'];
   const ResultIcon = tone.Icon;
-  const confidence = Math.round((scan?.confidence_score || 0) * 100);
-  const risk = Math.round((scan?.risk_score || 0) * 100);
+  const confidence = getPercent(scan?.confidence_score);
+  const risk = getPercent(scan?.risk_score);
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center">
-      <div className="w-full space-y-8">
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center p-4 bg-sky-500/10 rounded-full mb-4 text-sky-300">
-            <ImageIcon size={40} />
+      <div className="w-full space-y-6">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center p-3 bg-amber-400/15 rounded-full mb-3 text-amber-200">
+            <ImageIcon size={34} />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Scan Screenshots</h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-slate-400">
             Upload a suspicious webpage screenshot. The scanner now checks OCR text, login and payment cues, urgency language, form-like layouts, and optional brand-to-domain mismatches.
           </p>
         </div>
 
-        <div
-          ref={pasteZoneRef}
-          tabIndex={0}
-          className="rounded-3xl border border-slate-800 bg-slate-950/60 p-4 md:p-5 focus:outline-none focus:ring-2 focus:ring-sky-400/40"
-        >
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/80 via-orange-300/80 to-rose-300/80 rounded-3xl blur opacity-20 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+          <div
+            ref={pasteZoneRef}
+            tabIndex={0}
+            className="relative rounded-3xl border border-slate-800 bg-neutral-950/70 p-3.5 md:p-5 focus:outline-none focus:ring-2 focus:ring-orange-300/40"
+          >
           {!previewUrl ? (
-          <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-slate-700 border-dashed rounded-2xl cursor-pointer bg-slate-900/50 hover:bg-slate-800/50 hover:border-sky-400/50 transition-all">
+          <label className="flex flex-col items-center justify-center w-full h-60 border-2 border-slate-700 border-dashed rounded-2xl cursor-pointer bg-neutral-900/60 hover:bg-neutral-800/60 hover:border-orange-300/50 transition-all">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <UploadCloud className="w-12 h-12 text-slate-400 mb-4" />
               <p className="mb-2 text-lg text-slate-300"><span className="font-semibold">Click to upload</span> or drag and drop</p>
@@ -174,7 +149,7 @@ export default function VisionScanner() {
             <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
           </label>
         ) : (
-          <div className="relative w-full rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 flex flex-col items-center p-4 gap-4">
+          <div className="relative w-full rounded-2xl overflow-hidden border border-slate-700 bg-neutral-900 flex flex-col items-center p-4 gap-4">
             <button onClick={clearImage} className="absolute top-4 right-4 p-2 bg-slate-800 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 transition-all z-10">
               <X size={20} />
             </button>
@@ -188,13 +163,13 @@ export default function VisionScanner() {
                   value={websiteUrl}
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                   placeholder="Optional: paste the page URL or domain to validate the brand"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950/70 py-3 pl-11 pr-4 text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-sky-400/50"
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950/70 py-2.5 pl-11 pr-4 text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-orange-300/50"
                 />
               </div>
               <button
                 onClick={handleScan}
                 disabled={isScanning}
-                className="bg-sky-500 hover:bg-sky-400 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-8 py-3 rounded-xl font-bold transition-all w-full flex justify-center items-center gap-2"
+                className="bg-orange-300 hover:bg-orange-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-6 py-2.5 rounded-xl font-bold transition-all w-full flex justify-center items-center gap-2"
               >
                 {isScanning ? <><Loader2 className="animate-spin" size={20} /> Analyzing Image...</> : 'Run Visual Scan'}
               </button>
@@ -204,16 +179,17 @@ export default function VisionScanner() {
 
           <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-2">
-              <ClipboardPaste size={16} className="text-sky-300" />
+              <ClipboardPaste size={16} className="text-amber-200" />
               <span>{pasteHint}</span>
             </div>
             <span className="text-xs uppercase tracking-[0.2em] text-slate-500">Focus here and press Ctrl+V</span>
+          </div>
           </div>
         </div>
 
         {scan && !isScanning && (
           <div className="mt-4 animate-in fade-in slide-in-from-bottom-4">
-            <div className={`relative p-6 rounded-2xl border backdrop-blur-sm ${tone.card}`}>
+            <div className={`relative p-5 rounded-2xl border backdrop-blur-sm ${tone.card}`}>
               <div className="absolute top-4 right-4 z-10">
                 {!feedbackSubmitted && scan.result !== 'error' ? (
                   <button

@@ -1,41 +1,14 @@
 import { useState } from 'react';
-import { Link as LinkIcon, Search, AlertOctagon, CheckCircle2, Loader2, ArrowRight, Flag, ShieldAlert } from 'lucide-react';
+import { Link as LinkIcon, Search, Loader2, ArrowRight, Flag, CheckCircle2 } from 'lucide-react';
 import { postJson, submitFeedback } from '../lib/api';
+import { createResultStyles, getPercent } from '../lib/scanUi';
 
-const RESULT_STYLES = {
-  safe: {
-    card: 'bg-emerald-950/30 border-emerald-500/50 shadow-lg shadow-emerald-900/20',
-    iconWrap: 'bg-emerald-500/20 text-emerald-400',
-    title: 'text-emerald-400',
-    badge: 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20',
-    headline: 'Link Looks Safe',
-    Icon: CheckCircle2
-  },
-  suspicious: {
-    card: 'bg-amber-950/30 border-amber-500/50 shadow-lg shadow-amber-900/20',
-    iconWrap: 'bg-amber-500/20 text-amber-300',
-    title: 'text-amber-300',
-    badge: 'bg-amber-500/10 text-amber-200 border border-amber-500/20',
-    headline: 'Link Needs Review',
-    Icon: ShieldAlert
-  },
-  malicious: {
-    card: 'bg-red-950/30 border-red-500/50 shadow-lg shadow-red-900/20',
-    iconWrap: 'bg-red-500/20 text-red-400',
-    title: 'text-red-400',
-    badge: 'bg-red-500/10 text-red-200 border border-red-500/20',
-    headline: 'Malicious Phishing Link Detected',
-    Icon: AlertOctagon
-  },
-  error: {
-    card: 'bg-slate-900/60 border-slate-700 shadow-lg shadow-slate-950/40',
-    iconWrap: 'bg-slate-700 text-slate-200',
-    title: 'text-slate-100',
-    badge: 'bg-slate-800 text-slate-300 border border-slate-700',
-    headline: 'Scan Failed',
-    Icon: AlertOctagon
-  }
-};
+const RESULT_STYLES = createResultStyles({
+  safe: 'Link Looks Safe',
+  suspicious: 'Link Needs Review',
+  malicious: 'Malicious Phishing Link Detected',
+  error: 'Scan Failed',
+});
 
 export default function UrlScanner() {
   const [url, setUrl] = useState('');
@@ -70,25 +43,25 @@ export default function UrlScanner() {
 
   const tone = RESULT_STYLES[scan?.result || 'safe'];
   const ResultIcon = tone.Icon;
-  const confidence = Math.round((scan?.confidence_score || 0) * 100);
-  const threshold = Math.round((scan?.threshold_used || 0) * 100);
+  const confidence = getPercent(scan?.confidence_score);
+  const threshold = getPercent(scan?.threshold_used);
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <div className="w-full max-w-3xl space-y-8">
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center p-4 bg-blue-500/10 rounded-full mb-4 text-blue-400">
-            <LinkIcon size={40} />
+      <div className="w-full max-w-3xl space-y-6">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center p-3 bg-amber-400/15 rounded-full mb-3 text-amber-200">
+            <LinkIcon size={34} />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Is this link safe?</h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-slate-400">
             Paste a URL below. The engine checks lexical features, suspicious brand lookalikes, and heuristic fallback rules when the model is uncertain.
           </p>
         </div>
 
         <form onSubmit={handleScan} className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative flex items-center bg-slate-900 border border-slate-700 rounded-2xl p-2 shadow-2xl shadow-blue-900/20">
+          <div className="absolute -inset-1 bg-gradient-to-r from-amber-300 to-rose-300 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+          <div className="relative flex items-center bg-neutral-900 border border-slate-700 rounded-2xl p-1.5 shadow-2xl shadow-orange-950/20">
             <Search className="w-6 h-6 text-slate-500 ml-4" />
             <input
               type="url"
@@ -101,7 +74,7 @@ export default function UrlScanner() {
             <button
               type="submit"
               disabled={isScanning || !url}
-              className="bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center gap-2"
+              className="bg-orange-300 hover:bg-orange-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-6 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2"
             >
               {isScanning ? <><Loader2 className="animate-spin" size={20} /> Analyzing...</> : <>Scan URL <ArrowRight size={20} /></>}
             </button>
@@ -110,7 +83,7 @@ export default function UrlScanner() {
 
         {scan && !isScanning && (
           <div className="mt-8 animate-in fade-in slide-in-from-bottom-4">
-            <div className={`relative p-6 md:p-8 rounded-2xl border backdrop-blur-sm ${tone.card}`}>
+            <div className={`relative p-5 md:p-6 rounded-2xl border backdrop-blur-sm ${tone.card}`}>
               <div className="absolute top-4 right-4 z-10">
                 {!feedbackSubmitted && scan.result !== 'error' ? (
                   <button

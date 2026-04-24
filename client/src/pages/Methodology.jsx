@@ -4,7 +4,7 @@ const modules = [
   {
     title: '1. URL Risk Scoring',
     icon: LinkIcon,
-    accent: 'blue',
+    accent: 'amber',
     summary: 'The URL engine combines learned lexical signals with a fallback heuristic layer so obviously suspicious links are still caught even if the serialized model is unavailable or uncertain.',
     bullets: [
       'Measures hostname shape, entropy, suspicious tokens, nested subdomains, IP-based links, and brand lookalike patterns.',
@@ -26,7 +26,7 @@ const modules = [
   {
     title: '3. Screenshot Verification',
     icon: ImageIcon,
-    accent: 'sky',
+    accent: 'rose',
     summary: 'The vision path reads the screenshot itself instead of trusting page source or markup, which helps with spoofed login pages and cloned interfaces.',
     bullets: [
       'Runs OCR to extract visible text, domains, login wording, payment terms, and threat language.',
@@ -37,27 +37,27 @@ const modules = [
 ];
 
 const accentStyles = {
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  amber: 'bg-amber-300/15 text-amber-200 border-amber-300/30',
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  sky: 'bg-sky-500/10 text-sky-300 border-sky-400/20',
+  rose: 'bg-rose-300/15 text-rose-200 border-rose-300/30',
 };
 
 export default function Methodology() {
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
-      <div className="text-center space-y-4 mb-6">
+    <div className="max-w-5xl mx-auto space-y-6">
+      <div className="text-center space-y-3 mb-4">
         <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Detection Methodology</p>
         <h2 className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-slate-400">
           How PhishGuard makes a decision
         </h2>
-        <p className="text-slate-400 text-lg max-w-3xl mx-auto leading-relaxed">
+        <p className="text-slate-400 max-w-3xl mx-auto leading-relaxed">
           PhishGuard does not rely on one model or one keyword list. It combines URL structure analysis, phishing-aware text heuristics, and screenshot verification so each scanner can explain what it saw and where the risk came from.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-5">
-          <div className="mb-3 inline-flex rounded-xl border border-blue-500/20 bg-blue-500/10 p-2 text-blue-400">
+          <div className="mb-3 inline-flex rounded-xl border border-amber-300/30 bg-amber-300/15 p-2 text-amber-200">
             <ScanSearch size={18} />
           </div>
           <h3 className="text-lg font-semibold text-white">Explainable results</h3>
@@ -71,7 +71,7 @@ export default function Methodology() {
           <p className="mt-2 text-sm text-slate-400">Safe-domain handling and conversational overrides help prevent harmless content from being labeled as phishing.</p>
         </div>
         <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-5">
-          <div className="mb-3 inline-flex rounded-xl border border-amber-500/20 bg-amber-500/10 p-2 text-amber-300">
+          <div className="mb-3 inline-flex rounded-xl border border-rose-300/30 bg-rose-300/15 p-2 text-rose-200">
             <Lock size={18} />
           </div>
           <h3 className="text-lg font-semibold text-white">Layered resilience</h3>
@@ -83,7 +83,7 @@ export default function Methodology() {
         {modules.map((module) => {
           const Icon = module.icon;
           return (
-            <div key={module.title} className="bg-slate-900/40 border border-slate-800 p-8 rounded-2xl backdrop-blur-sm relative overflow-hidden group hover:border-slate-700 transition-all">
+            <div key={module.title} className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl backdrop-blur-sm relative overflow-hidden group hover:border-slate-700 transition-all">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.02] rounded-full blur-3xl"></div>
               <div className="flex items-start gap-4">
                 <div className={`p-3 rounded-xl border shrink-0 ${accentStyles[module.accent]}`}>
@@ -97,7 +97,7 @@ export default function Methodology() {
                   <div className="grid gap-3">
                     {module.bullets.map((bullet) => (
                       <div key={bullet} className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/45 px-4 py-3">
-                        <div className={`mt-1 h-2 w-2 rounded-full ${module.accent === 'blue' ? 'bg-blue-400' : module.accent === 'emerald' ? 'bg-emerald-400' : 'bg-sky-300'}`}></div>
+                        <div className={`mt-1 h-2 w-2 rounded-full ${module.accent === 'amber' ? 'bg-amber-200' : module.accent === 'emerald' ? 'bg-emerald-400' : 'bg-rose-200'}`}></div>
                         <p className="text-sm text-slate-300 leading-relaxed">{bullet}</p>
                       </div>
                     ))}
@@ -109,7 +109,7 @@ export default function Methodology() {
         })}
       </div>
 
-      <div className="mt-10 p-6 bg-amber-500/5 border border-amber-500/20 rounded-2xl flex items-center justify-center gap-3 text-amber-400/80">
+      <div className="mt-8 p-5 bg-amber-300/10 border border-amber-300/25 rounded-2xl flex items-center justify-center gap-3 text-amber-200/90">
         <Lock size={18} />
         <p className="text-sm font-medium">Scan snippets are minimized in storage, and the UI is designed to surface enough evidence for review without dumping raw private content unnecessarily.</p>
       </div>

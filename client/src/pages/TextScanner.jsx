@@ -1,41 +1,14 @@
 import { useState } from 'react';
-import { Mail, Search, AlertOctagon, CheckCircle2, Loader2, Flag, ShieldAlert } from 'lucide-react';
+import { Mail, Search, Loader2, Flag, CheckCircle2 } from 'lucide-react';
 import { postJson, submitFeedback } from '../lib/api';
+import { createResultStyles, getPercent } from '../lib/scanUi';
 
-const RESULT_STYLES = {
-  safe: {
-    card: 'bg-emerald-950/30 border-emerald-500/50 shadow-lg shadow-emerald-900/20',
-    iconWrap: 'bg-emerald-500/20 text-emerald-400',
-    title: 'text-emerald-400',
-    badge: 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20',
-    headline: 'Looks Safe',
-    Icon: CheckCircle2
-  },
-  suspicious: {
-    card: 'bg-amber-950/30 border-amber-500/50 shadow-lg shadow-amber-900/20',
-    iconWrap: 'bg-amber-500/20 text-amber-300',
-    title: 'text-amber-300',
-    badge: 'bg-amber-500/10 text-amber-200 border border-amber-500/20',
-    headline: 'Needs Manual Review',
-    Icon: ShieldAlert
-  },
-  malicious: {
-    card: 'bg-red-950/30 border-red-500/50 shadow-lg shadow-red-900/20',
-    iconWrap: 'bg-red-500/20 text-red-400',
-    title: 'text-red-400',
-    badge: 'bg-red-500/10 text-red-200 border border-red-500/20',
-    headline: 'High Risk Phishing Signals',
-    Icon: AlertOctagon
-  },
-  error: {
-    card: 'bg-slate-900/60 border-slate-700 shadow-lg shadow-slate-950/40',
-    iconWrap: 'bg-slate-700 text-slate-200',
-    title: 'text-slate-100',
-    badge: 'bg-slate-800 text-slate-300 border border-slate-700',
-    headline: 'Scan Failed',
-    Icon: AlertOctagon
-  }
-};
+const RESULT_STYLES = createResultStyles({
+  safe: 'Looks Safe',
+  suspicious: 'Needs Manual Review',
+  malicious: 'High Risk Phishing Signals',
+  error: 'Scan Failed',
+});
 
 export default function TextScanner() {
   const [text, setText] = useState('');
@@ -69,36 +42,39 @@ export default function TextScanner() {
 
   const tone = RESULT_STYLES[scan?.result || 'safe'];
   const ResultIcon = tone.Icon;
-  const confidence = Math.round((scan?.confidence_score || 0) * 100);
-  const risk = Math.round((scan?.risk_score || 0) * 100);
+  const confidence = getPercent(scan?.confidence_score);
+  const risk = getPercent(scan?.risk_score);
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center">
-      <div className="w-full space-y-8">
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center p-4 bg-emerald-500/10 rounded-full mb-4 text-emerald-400">
-            <Mail size={40} />
+      <div className="w-full space-y-6">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center p-3 bg-amber-400/15 rounded-full mb-3 text-amber-200">
+            <Mail size={34} />
           </div>
           <h2 className="text-3xl font-extrabold text-white">Analyze Email & Text</h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-slate-400">
             Paste an email, SMS, or message. PhishGuard now blends NLP with phishing-specific safety heuristics so normal conversation is less likely to get mislabeled.
           </p>
         </div>
 
-        <form onSubmit={handleScan} className="relative group flex flex-col gap-4">
-          <div className="relative bg-slate-900 border border-slate-700 rounded-2xl p-4 shadow-2xl shadow-emerald-900/20">
-            <textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Paste the message here..."
-              className="w-full bg-transparent border-none text-lg text-white p-2 focus:outline-none placeholder:text-slate-600 resize-none h-48"
-              required
-            />
+        <form onSubmit={handleScan} className="flex flex-col gap-3">
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-300/60 via-orange-300/45 to-rose-300/60 rounded-2xl blur-sm opacity-60 group-hover:opacity-90 transition duration-500"></div>
+            <div className="relative bg-neutral-900 border border-orange-200/25 rounded-2xl p-3 shadow-xl shadow-orange-900/20">
+              <textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Paste the message here..."
+                className="w-full bg-transparent border-none text-base text-white p-2 focus:outline-none placeholder:text-slate-600 resize-none h-44"
+                required
+              />
+            </div>
           </div>
           <button
             type="submit"
             disabled={isScanning || !text}
-            className="bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 w-full md:w-auto self-end"
+            className="bg-orange-300 hover:bg-orange-200 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 w-full md:w-auto self-end"
           >
             {isScanning ? <><Loader2 className="animate-spin" size={20} /> Analyzing Text...</> : <>Scan Content <Search size={20} /></>}
           </button>
@@ -106,7 +82,7 @@ export default function TextScanner() {
 
         {scan && !isScanning && (
           <div className="mt-4 animate-in fade-in slide-in-from-bottom-4">
-            <div className={`relative p-6 rounded-2xl border backdrop-blur-sm ${tone.card}`}>
+            <div className={`relative p-5 rounded-2xl border backdrop-blur-sm ${tone.card}`}>
               <div className="absolute top-4 right-4 z-10">
                 {!feedbackSubmitted && scan.result !== 'error' ? (
                   <button
