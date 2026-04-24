@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: phishguard-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    networks:
+      - phishguard-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: phishguard-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - phishguard-net
+    restart: unless-stopped
+
+  ml_engine:
+    build:
+      context: ./ml_engine
+      dockerfile: Dockerfile
+    container_name: phishguard-ml-engine
+    ports:
+      - "5001:5001"
+    networks:
+      - phishguard-net
+    restart: unless-stopped
+
+networks:
+  phishguard-net:
+    driver: bridge
