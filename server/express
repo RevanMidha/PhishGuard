@@ -1,0 +1,3 @@
+if (!url || !url.startsWith("http")) {
+  return res.status(400).json({ error: "Invalid URL" });
+}
