@@ -1,20 +1,6 @@
 import re
 from typing import Any, Dict, List, Optional
 
-
-SAFE_CONVERSATIONAL_PATTERNS = [
-    r"\bhi\b",
-    r"\bhello\b",
-    r"\bhey\b",
-    r"\bgood (morning|afternoon|evening)\b",
-    r"\bmy name is\b",
-    r"\bnice to meet you\b",
-    r"\bhow are you\b",
-    r"\bthank(s| you)\b",
-    r"\bsee you\b",
-    r"\blet('?s| us) (talk|meet|chat)\b",
-]
-
 SUSPICIOUS_GROUPS = {
     "urgency": {
         "weight": 1.7,
@@ -123,8 +109,21 @@ SUSPICIOUS_GROUPS = {
     },
 }
 
-URL_PATTERN = re.compile(r"(https?://\S+|www\.\S+)", re.IGNORECASE)
+SAFE_CONVERSATIONAL_PATTERNS = [
+    r"\bhi\b",
+    r"\bhello\b",
+    r"\bhey\b",
+    r"\bgood (morning|afternoon|evening)\b",
+    r"\bmy name is\b",
+    r"\bnice to meet you\b",
+    r"\bhow are you\b",
+    r"\bthank(s| you)\b",
+    r"\bsee you\b",
+    r"\blet('?s| us) (talk|meet|chat)\b",
+]
+
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
+URL_PATTERN = re.compile(r"(https?://\S+|www\.\S+)", re.IGNORECASE)
 SHORTENER_PATTERN = re.compile(
     r"\b(bit\.ly|tinyurl\.com|t\.co|goo\.gl|is\.gd|rb\.gy|cutt\.ly)\b",
     re.IGNORECASE,
