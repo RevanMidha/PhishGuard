@@ -2,6 +2,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 from functools import lru_cache
+import sys
+import os
+
+# Ensure submodule directories are on the path so joblib can unpickle models
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'urls'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'emails'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'vision'))
 
 from emails.text_scanner import analyze_text_message
 from urls.url_model_utils import predict_url_probabilities
