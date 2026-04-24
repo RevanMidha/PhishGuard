@@ -1,0 +1,13 @@
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.8.0
+joblib==1.4.2
+tldextract==5.1.2
+beautifulsoup4==4.12.3
+requests==2.32.3
+nltk==3.9.1
+opencv-python==4.10.0.84
+flask==3.0.3
+flask-cors==4.0.1
+Pillow==12.2.0
+pytesseract==0.3.13

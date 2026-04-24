@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* LOCKS THE SCROLLBAR */
+  background-color: #020617;
+  font-family: 'Inter', sans-serif;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
