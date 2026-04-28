@@ -9,7 +9,9 @@ RUN npm run build
 # Serve stage
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
-# Expose port
-EXPOSE 80
+# Copy Nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose ports
+EXPOSE 80 443
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
